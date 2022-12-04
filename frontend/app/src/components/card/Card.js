@@ -45,7 +45,13 @@ function Card({ coupan }) {
 						<button className="btn">
 							<img src={vcode} alt="voucher code" height={25} />
 							&nbsp;
-							{coupan.coupancode}
+							<span
+								className={
+									coupan.status === "Active" ? "" : "coupon-code-value"
+								}
+							>
+								{coupan.coupancode}
+							</span>
 						</button>
 					</div>
 				</div>

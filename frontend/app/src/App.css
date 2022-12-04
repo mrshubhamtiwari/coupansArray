@@ -54,6 +54,14 @@
 	display: none;
 }
 
+.filters {
+	display: flex;
+	flex-direction: row;
+}
+.filters > div {
+	flex: 1;
+}
+
 @media only screen and (max-width: 768px) {
 	.content-body {
 		background-color: #f9f9f9;
@@ -62,6 +70,5 @@
 	}
 	.search-body {
 		display: block;
-	
 	}
 }

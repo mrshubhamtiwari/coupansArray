@@ -8,25 +8,26 @@ import Card from "./components/card/Card";
 import Sidebar from "./components/sidebar/Sidebar";
 import Search from "./components/search/Search";
 
-const category = [
-	"Electronics",
-	"Foods & Beverages",
-	"Clothings",
-	"Beauty products",
-	"Online Stores",
-];
 const brands = [
-	{ type: "fashion", name: "nike" },
-	{ type: "online", name: "Amazon" },
-	{ type: "online", name: "Flipkart" },
-	{ type: "online", name: "Nyka" },
-	{ type: "online", name: "Croma" },
+	{ type: "fashion", name: "nike", id: 1 },
+	{ type: "online", name: "Amazon", id: 2 },
+	{ type: "online", name: "Flipkart", id: 3 },
+	{ type: "online", name: "Nyka", id: 4 },
+	{ type: "online", name: "Croma", id: 5 },
 ];
+const category = {
+	1: "Electronics",
+	2: "Foods & Beverages",
+	3: "Clothings",
+	4: "Beauty products",
+	5: "Online Stores",
+};
 
 const date = new Date();
 
 const coupans = [
 	{
+		id: 1,
 		brand: "Croma",
 		label: "50% off on electronics",
 		coupancode: "KHHAKJS-UIYI-NHJHJNKL-MLJL",
@@ -40,6 +41,7 @@ const coupans = [
 		image: "https://upload.wikimedia.org/wikipedia/commons/f/f2/Croma_Logo.png",
 	},
 	{
+		id: 2,
 		brand: "Amazon",
 		label: "50% off on electronics",
 		coupancode: "KHHAKJS-UIYI-NHJHJNKL-MLJL",
@@ -72,15 +74,23 @@ function App() {
 			<section className="content-body">
 				<div className="search-body">
 					<Search />
+					{/* <div className="filters">
+						<div>
+							<Category />
+						</div>
+						<div>
+							<Brands brands={brands} />
+						</div>
+					</div> */}
 				</div>
 				<div className="content">
 					{coupans.map((coupan) => (
-						<Card coupan={coupan} />
+						<Card coupan={coupan} key={coupan.id} />
 					))}
 				</div>
 				<div></div>
 				<div className="sidebar p-4">
-					<Sidebar category={category} brands={brands} />
+					<Sidebar brands={brands} category={category} />
 				</div>
 			</section>
 		</>

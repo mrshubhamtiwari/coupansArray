@@ -11,7 +11,7 @@ const Sidebar = ({ category, brands }) => {
 			</div>
 			<div className="category">
 				<h4>category</h4>
-				<Category category={category} />
+				<Category category={category}/>
 			</div>
 			<div className="brands">
 				<h4>brands</h4>
