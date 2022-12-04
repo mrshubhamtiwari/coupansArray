@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import "./coupons.css";
 
@@ -7,6 +7,8 @@ import logoText from "./images/logo-text-light.jpg";
 import Card from "./components/card/Card";
 import Sidebar from "./components/sidebar/Sidebar";
 import Search from "./components/search/Search";
+import Backdrop from "./components/backdrop/Backdrop";
+import Login from "./components/login/Login";
 
 const brands = [
 	{ type: "fashion", name: "nike", id: 1 },
@@ -73,8 +75,20 @@ const coupans = [
 ];
 
 function App() {
+	const [login, setLogin] = useState(false);
 	return (
 		<>
+			{login ? (
+				<Backdrop
+					setStatus={() => {
+						setLogin(!login);
+					}}
+				>
+					<Login />
+				</Backdrop>
+			) : (
+				""
+			)}
 			<header className="header">
 				<div>
 					<img src={logo} alt="logo" className="logo" />
@@ -83,7 +97,14 @@ function App() {
 					<img src={logoText} alt="logo" className="logoText" />
 				</div>
 				<div>
-					<button className="btn btn-secondry">SignIn</button>
+					<button
+						className="btn btn-secondry"
+						onClick={() => {
+							setLogin(true);
+						}}
+					>
+						SignIn
+					</button>
 				</div>
 			</header>
 			<section className="content-body">

@@ -1,0 +1,9 @@
+.backdrop {
+	height: 100%;
+	width: 100%;
+	padding-top: 20rem;
+	position: absolute;
+	text-align: center;
+	background-color: #000000a3;
+	opacity: 0.8;
+}
