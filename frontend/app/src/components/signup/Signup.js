@@ -1,13 +1,14 @@
 import React from "react";
 
-import "./login.css";
-function Login(props) {
+import "./signup.css";
+function Signup(props) {
 	return (
-		<div className="login-container">
+		<div className="signup-container">
 			<div className="element-group-header">
-				<h3>Login here..</h3>
+				<h3>Register</h3>
 				<span onClick={props.setStatus}>&times;</span>
 			</div>
+
 			<div className="element-group">
 				<label>
 					<svg
@@ -28,6 +29,7 @@ function Login(props) {
 				</label>
 				<input type="text" placeholder="username" className="" />
 			</div>
+
 			<div className="element-group">
 				<label>
 					<svg
@@ -48,13 +50,13 @@ function Login(props) {
 				<input type="submit" value={"Submit"} className="btn btn-success" />
 				<input
 					type="submit"
-					value={"create an account"}
+					value={"signin"}
 					className="btn"
-					onClick={props.setRegister}
+					onClick={props.setLogin}
 				/>
 			</div>
 		</div>
 	);
 }
 
-export default Login;
+export default Signup;

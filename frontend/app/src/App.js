@@ -9,6 +9,7 @@ import Sidebar from "./components/sidebar/Sidebar";
 import Search from "./components/search/Search";
 import Backdrop from "./components/backdrop/Backdrop";
 import Login from "./components/login/Login";
+import Signup from "./components/signup/Signup";
 
 const brands = [
 	{ type: "fashion", name: "nike", id: 1 },
@@ -76,15 +77,35 @@ const coupans = [
 
 function App() {
 	const [login, setLogin] = useState(false);
+	const [register, setRegister] = useState(false);
 	return (
 		<>
 			{login ? (
-				<Backdrop
-					setStatus={() => {
-						setLogin(!login);
-					}}
-				>
-					<Login />
+				<Backdrop>
+					<Login
+						setStatus={() => {
+							setLogin(!login);
+						}}
+						setRegister={() => {
+							if (!register) setRegister(!register);
+							else setLogin(false);
+						}}
+					/>
+				</Backdrop>
+			) : (
+				""
+			)}
+			{register ? (
+				<Backdrop>
+					<Signup
+						setStatus={() => {
+							setRegister(!register);
+						}}
+						setLogin={() => {
+							if (!login) setLogin(!login);
+							else setRegister(!register);
+						}}
+					/>
 				</Backdrop>
 			) : (
 				""
@@ -104,6 +125,16 @@ function App() {
 						}}
 					>
 						SignIn
+					</button>
+				</div>
+				<div>
+					<button
+						className="btn btn-secondry"
+						onClick={() => {
+							setRegister(true);
+						}}
+					>
+						Register
 					</button>
 				</div>
 			</header>
