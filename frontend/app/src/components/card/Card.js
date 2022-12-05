@@ -11,6 +11,9 @@ import {
 import vcode from "../../images/icons/voucher.png";
 import "./card.css";
 function Card({ coupan }) {
+	function copycodeHandler(event) {
+		navigator.clipboard.writeText(event.target.innerText);
+	}
 	return (
 		<div className="coupan-card">
 			<div className="coupan-header">
@@ -49,6 +52,7 @@ function Card({ coupan }) {
 								className={
 									coupan.status === "Active" ? "" : "coupon-code-value"
 								}
+								onClick={copycodeHandler}
 							>
 								{coupan.coupancode}
 							</span>

@@ -22,7 +22,7 @@ const Category = ({ category }) => {
 	return (
 		<div className="category-container">
 			<button className="select-label" onClick={onSelectClickHandler}>
-				Select
+				Select Categories
 			</button>
 			<ul className={status}>
 				{Object.keys(category).map((val) => (

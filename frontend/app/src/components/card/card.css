@@ -17,7 +17,7 @@
 }
 
 .coupan-image {
-	padding: 0.5em;
+	padding: 1.5em;
 	flex: 1;
 	display: flex;
 
@@ -75,7 +75,7 @@
 	}
 
 	.coupan-image {
-		padding: 0.5em;
+		padding: 1.5em;
 		flex: 1;
 		display: flex;
 		align-items: center;

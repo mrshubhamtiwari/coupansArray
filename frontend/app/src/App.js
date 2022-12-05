@@ -81,11 +81,12 @@ function App() {
 	return (
 		<>
 			{login ? (
-				<Backdrop>
+				<Backdrop
+					closeBackdrop={() => {
+						setLogin(!login);
+					}}
+				>
 					<Login
-						setStatus={() => {
-							setLogin(!login);
-						}}
 						setRegister={() => {
 							if (!register) setRegister(!register);
 							else setLogin(false);
@@ -96,11 +97,12 @@ function App() {
 				""
 			)}
 			{register ? (
-				<Backdrop>
+				<Backdrop
+					closeBackdrop={() => {
+						setRegister(!register);
+					}}
+				>
 					<Signup
-						setStatus={() => {
-							setRegister(!register);
-						}}
 						setLogin={() => {
 							if (!login) setLogin(!login);
 							else setRegister(!register);
@@ -110,6 +112,7 @@ function App() {
 			) : (
 				""
 			)}
+
 			<header className="header">
 				<div>
 					<img src={logo} alt="logo" className="logo" />
@@ -117,6 +120,7 @@ function App() {
 				<div>
 					<img src={logoText} alt="logo" className="logoText" />
 				</div>
+				{/* SignIn */}
 				<div>
 					<button
 						className="btn btn-secondry"
@@ -127,6 +131,7 @@ function App() {
 						SignIn
 					</button>
 				</div>
+				{/* SignUp */}
 				<div>
 					<button
 						className="btn btn-secondry"

@@ -20,7 +20,7 @@ const Brands = ({ brands }) => {
 	return (
 		<div className="brand-container">
 			<button className="select-label" onClick={onSelectClickHandler}>
-				Select
+				Select Brands
 			</button>
 			<ul className={status}>
 				{brands.map((val) => (
