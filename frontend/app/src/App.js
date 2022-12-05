@@ -2,6 +2,13 @@ import React, { useState } from "react";
 import "./App.css";
 import "./coupons.css";
 
+import {
+	BrowserRouter as Router,
+	Route,
+	Switch,
+	Redirect,
+} from "react-router-dom";
+
 import logo from "./images/logo-light.png";
 import logoText from "./images/logo-text-light.jpg";
 import Card from "./components/card/Card";
@@ -10,6 +17,7 @@ import Search from "./components/search/Search";
 import Backdrop from "./components/backdrop/Backdrop";
 import Login from "./components/login/Login";
 import Signup from "./components/signup/Signup";
+import Dashboard from "./components/dashboard/Dashboard";
 
 const brands = [
 	{ type: "fashion", name: "nike", id: 1 },
@@ -80,91 +88,101 @@ function App() {
 	const [register, setRegister] = useState(false);
 	return (
 		<>
-			{login ? (
-				<Backdrop
-					closeBackdrop={() => {
-						setLogin(!login);
-					}}
-				>
-					<Login
-						setRegister={() => {
-							if (!register) setRegister(!register);
-							else setLogin(false);
-						}}
-					/>
-				</Backdrop>
-			) : (
-				""
-			)}
-			{register ? (
-				<Backdrop
-					closeBackdrop={() => {
-						setRegister(!register);
-					}}
-				>
-					<Signup
-						setLogin={() => {
-							if (!login) setLogin(!login);
-							else setRegister(!register);
-						}}
-					/>
-				</Backdrop>
-			) : (
-				""
-			)}
+			<Router>
+				<Switch>
+					<Route path="/" exact>
+						{login ? (
+							<Backdrop
+								closeBackdrop={() => {
+									setLogin(!login);
+								}}
+							>
+								<Login
+									setRegister={() => {
+										if (!register) setRegister(!register);
+										else setLogin(false);
+									}}
+								/>
+							</Backdrop>
+						) : (
+							""
+						)}
+						{register ? (
+							<Backdrop
+								closeBackdrop={() => {
+									setRegister(!register);
+								}}
+							>
+								<Signup
+									setLogin={() => {
+										if (!login) setLogin(!login);
+										else setRegister(!register);
+									}}
+								/>
+							</Backdrop>
+						) : (
+							""
+						)}
 
-			<header className="header">
-				<div>
-					<img src={logo} alt="logo" className="logo" />
-				</div>
-				<div>
-					<img src={logoText} alt="logo" className="logoText" />
-				</div>
-				{/* SignIn */}
-				<div>
-					<button
-						className="btn btn-secondry"
-						onClick={() => {
-							setLogin(true);
-						}}
-					>
-						SignIn
-					</button>
-				</div>
-				{/* SignUp */}
-				<div>
-					<button
-						className="btn btn-secondry"
-						onClick={() => {
-							setRegister(true);
-						}}
-					>
-						Register
-					</button>
-				</div>
-			</header>
-			<section className="content-body">
-				<div className="search-body">
-					<Search />
-					{/* <div className="filters">
-						<div>
-							<Category />
-						</div>
-						<div>
-							<Brands brands={brands} />
-						</div>
-					</div> */}
-				</div>
-				<div className="content">
-					{coupans.map((coupan) => (
-						<Card coupan={coupan} key={coupan.id} />
-					))}
-				</div>
-				<div></div>
-				<div className="sidebar p-4">
-					<Sidebar brands={brands} category={category} />
-				</div>
-			</section>
+						<header className="header">
+							<div>
+								<img src={logo} alt="logo" className="logo" />
+							</div>
+							<div>
+								<img src={logoText} alt="logo" className="logoText" />
+							</div>
+							{/* SignIn */}
+							<div>
+								<button
+									className="btn btn-secondry"
+									onClick={() => {
+										setLogin(true);
+									}}
+								>
+									SignIn
+								</button>
+							</div>
+							{/* SignUp */}
+							<div>
+								<button
+									className="btn btn-secondry"
+									onClick={() => {
+										setRegister(true);
+									}}
+								>
+									Register
+								</button>
+							</div>
+						</header>
+						<section className="content-body">
+							<div className="search-body">
+								<Search />
+								{/* <div className="filters">
+										<div>
+											<Category />
+										</div>
+										<div>
+											<Brands brands={brands} />
+										</div>
+									</div> */}
+							</div>
+							<div className="content">
+								{coupans.map((coupan) => (
+									<Card coupan={coupan} key={coupan.id} />
+								))}
+							</div>
+							<div></div>
+							<div className="sidebar p-4">
+								<Sidebar brands={brands} category={category} />
+							</div>
+						</section>
+					</Route>
+					<Route path="/dashboard" exact>
+						<Dashboard />
+					</Route>
+					<Route path={""}></Route>
+				</Switch>
+			</Router>
 		</>
 	);
 }
