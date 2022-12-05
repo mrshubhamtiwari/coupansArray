@@ -6,6 +6,10 @@ export default Dashboard = () => {
 			<nav>
 				<ul></ul>
 			</nav>
+			<div>
+				<div></div>
+				<div></div>
+			</div>
 		</div>
 	);
 };
