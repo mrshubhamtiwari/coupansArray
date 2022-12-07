@@ -10,7 +10,12 @@ import {
 
 import vcode from "../../images/icons/voucher.png";
 import "./card.css";
-function Card({ coupan }) {
+function Card({
+	coupan,
+	deleteCardHandler,
+	editCardHandler,
+	changeStatusHandler,
+}) {
 	function copycodeHandler(event) {
 		navigator.clipboard.writeText(event.target.innerText);
 	}
@@ -82,6 +87,15 @@ function Card({ coupan }) {
 							</li>
 						</ul>
 					</div>
+				</div>
+			</div>
+			<div className="coupan-footers">
+				<div className="actionButtons">
+					<button onClick={() => editCardHandler(coupan.id)}>Edit</button>
+					<button onClick={() => deleteCardHandler(coupan.id)}>Delete</button>
+					<button onClick={() => changeStatusHandler(coupan.id)}>
+						Mark as inactive
+					</button>
 				</div>
 			</div>
 		</div>

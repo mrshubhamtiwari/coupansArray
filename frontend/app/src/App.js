@@ -4,6 +4,7 @@ import "./coupons.css";
 
 import {
 	BrowserRouter as Router,
+	useHistory,
 	Route,
 	Switch,
 	Redirect,
@@ -36,59 +37,72 @@ const category = {
 
 const date = new Date();
 
-const coupans = [
-	{
-		id: 1,
-		brand: "Croma",
-		label: "50% off on electronics",
-		coupancode: "KHHAKJS-UIYI-NHJHJNKL-MLJL",
-		addedDate:
-			date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear(),
-		expiryDate:
-			date.getDate() + 10 + "/" + date.getMonth() + "/" + date.getFullYear(),
-		addedBy: "Shubham Tiwari",
-		viewCount: 500,
-		status: "Active",
-		image: "https://upload.wikimedia.org/wikipedia/commons/f/f2/Croma_Logo.png",
-	},
-	{
-		id: 2,
-		brand: "Amazon",
-		label: "50% off on electronics",
-		coupancode: "KHHAKJS-UIYI-NHJHJNKL-MLJL",
-		addedDate:
-			date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear(),
-		expiryDate:
-			date.getDate() + 10 + "/" + date.getMonth() + "/" + date.getFullYear(),
-		addedBy: "Gautam Sharma",
-		viewCount: 120,
-		status: "Expired",
-		image:
-			"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/905px-Amazon_logo.svg.png?20220213013322",
-	},
-	{
-		id: 3,
-		brand: "Amazon",
-		label: "50% off on electronics",
-		coupancode: "KHHAKJS-UIYI-NHJHJNKL-MLJL",
-		addedDate:
-			date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear(),
-		expiryDate:
-			date.getDate() + 10 + "/" + date.getMonth() + "/" + date.getFullYear(),
-		addedBy: "Gautam Sharma",
-		viewCount: 120,
-		status: "Active",
-		image:
-			"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/905px-Amazon_logo.svg.png?20220213013322",
-	},
-];
-
 function App() {
+	const history = useHistory();
 	const [login, setLogin] = useState(false);
 	const [register, setRegister] = useState(false);
+
+	var [coupans, setCoupans] = useState([
+		{
+			id: 1,
+			brand: "Croma",
+			label: "50% off on electronics",
+			coupancode: "KHHAKJS-UIYI-NHJHJNKL-MLJL",
+			addedDate:
+				date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear(),
+			expiryDate:
+				date.getDate() + 10 + "/" + date.getMonth() + "/" + date.getFullYear(),
+			addedBy: "Shubham Tiwari",
+			viewCount: 500,
+			status: "Active",
+			image:
+				"https://upload.wikimedia.org/wikipedia/commons/f/f2/Croma_Logo.png",
+		},
+		{
+			id: 2,
+			brand: "Amazon",
+			label: "50% off on electronics",
+			coupancode: "KHHAKJS-UIYI-NHJHJNKL-MLJL",
+			addedDate:
+				date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear(),
+			expiryDate:
+				date.getDate() + 10 + "/" + date.getMonth() + "/" + date.getFullYear(),
+			addedBy: "Gautam Sharma",
+			viewCount: 120,
+			status: "Expired",
+			image:
+				"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/905px-Amazon_logo.svg.png?20220213013322",
+		},
+		{
+			id: 3,
+			brand: "Amazon",
+			label: "50% off on electronics",
+			coupancode: "KHHAKJS-UIYI-NHJHJNKL-MLJL",
+			addedDate:
+				date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear(),
+			expiryDate:
+				date.getDate() + 10 + "/" + date.getMonth() + "/" + date.getFullYear(),
+			addedBy: "Gautam Sharma",
+			viewCount: 120,
+			status: "Active",
+			image:
+				"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/905px-Amazon_logo.svg.png?20220213013322",
+		},
+	]);
+
+	function deleteCardHandler(id) {
+		console.log(id);
+		let x = coupans.filter((coupan) => {
+			return coupan.id != id;
+		});
+		setCoupans(x);
+	}
+	function editCardHandler() {}
+	function changeStatusHandler() {}
+
 	return (
-		<>
-			<Router>
+		<Router>
+			<main>
 				<Switch>
 					<Route path="/" exact>
 						{login ? (
@@ -168,7 +182,13 @@ function App() {
 							</div>
 							<div className="content">
 								{coupans.map((coupan) => (
-									<Card coupan={coupan} key={coupan.id} />
+									<Card
+										coupan={coupan}
+										key={coupan.id}
+										id={coupan.id}
+										deleteCardHandler={deleteCardHandler}
+										editCardHandler={editCardHandler}
+									/>
 								))}
 							</div>
 							<div></div>
@@ -177,13 +197,10 @@ function App() {
 							</div>
 						</section>
 					</Route>
-					<Route path="/dashboard" exact>
-						<Dashboard />
-					</Route>
-					<Route path={""}></Route>
+					<Route path="/dashboard" exact component={Dashboard} />
 				</Switch>
-			</Router>
-		</>
+			</main>
+		</Router>
 	);
 }
 
