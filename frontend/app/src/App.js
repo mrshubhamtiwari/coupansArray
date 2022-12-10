@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
-import "./coupons.css";
 
+import { AppContext } from "./context/AppContext";
 import {
 	BrowserRouter as Router,
 	useHistory,
@@ -41,65 +41,36 @@ function App() {
 	const history = useHistory();
 	const [login, setLogin] = useState(false);
 	const [register, setRegister] = useState(false);
-
-	var [coupans, setCoupans] = useState([
-		{
-			id: 1,
-			brand: "Croma",
-			label: "50% off on electronics",
-			coupancode: "KHHAKJS-UIYI-NHJHJNKL-MLJL",
-			addedDate:
-				date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear(),
-			expiryDate:
-				date.getDate() + 10 + "/" + date.getMonth() + "/" + date.getFullYear(),
-			addedBy: "Shubham Tiwari",
-			viewCount: 500,
-			status: "Active",
-			image:
-				"https://upload.wikimedia.org/wikipedia/commons/f/f2/Croma_Logo.png",
-		},
-		{
-			id: 2,
-			brand: "Amazon",
-			label: "50% off on electronics",
-			coupancode: "KHHAKJS-UIYI-NHJHJNKL-MLJL",
-			addedDate:
-				date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear(),
-			expiryDate:
-				date.getDate() + 10 + "/" + date.getMonth() + "/" + date.getFullYear(),
-			addedBy: "Gautam Sharma",
-			viewCount: 120,
-			status: "Expired",
-			image:
-				"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/905px-Amazon_logo.svg.png?20220213013322",
-		},
-		{
-			id: 3,
-			brand: "Amazon",
-			label: "50% off on electronics",
-			coupancode: "KHHAKJS-UIYI-NHJHJNKL-MLJL",
-			addedDate:
-				date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear(),
-			expiryDate:
-				date.getDate() + 10 + "/" + date.getMonth() + "/" + date.getFullYear(),
-			addedBy: "Gautam Sharma",
-			viewCount: 120,
-			status: "Active",
-			image:
-				"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/905px-Amazon_logo.svg.png?20220213013322",
-		},
-	]);
-
-	function deleteCardHandler(id) {
-		console.log(id);
-		let x = coupans.filter((coupan) => {
-			return coupan.id != id;
-		});
-		setCoupans(x);
+	var [coupans, setCoupans] = useState([]);
+	useEffect(() => {
+		console.log("App.js");
+		fetchCoupon();
+	}, []);
+	function fetchCoupon() {
+		fetch("http://localhost:5000/coupons", {
+			headers: {
+				"Content-Type": "application/json",
+			},
+		})
+			.then((response) => response.json())
+			.then((jsondata) => {
+				setCoupans(jsondata);
+			})
+			.catch();
 	}
-	function editCardHandler() {}
-	function changeStatusHandler() {}
 
+	function fetchCoupon() {
+		fetch("http://localhost:5000/coupons", {
+			headers: {
+				"Content-Type": "application/json",
+			},
+		})
+			.then((response) => response.json())
+			.then((jsondata) => {
+				setCoupans(jsondata);
+			})
+			.catch();
+	}
 	return (
 		<Router>
 			<main>
@@ -182,13 +153,7 @@ function App() {
 							</div>
 							<div className="content">
 								{coupans.map((coupan) => (
-									<Card
-										coupan={coupan}
-										key={coupan.id}
-										id={coupan.id}
-										deleteCardHandler={deleteCardHandler}
-										editCardHandler={editCardHandler}
-									/>
+									<Card coupan={coupan} key={coupan.id} id={coupan.id} />
 								))}
 							</div>
 							<div></div>
@@ -197,7 +162,11 @@ function App() {
 							</div>
 						</section>
 					</Route>
-					<Route path="/dashboard" exact component={Dashboard} />
+					<Route path="/dashboard" exact>
+						<AppContext.Provider value={{ coupans, setCoupans, fetchCoupon }}>
+							<Dashboard />
+						</AppContext.Provider>
+					</Route>
 				</Switch>
 			</main>
 		</Router>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
 	MdHome,
 	MdLogout,
@@ -12,31 +12,66 @@ import "./dashboard.css";
 import AddCoupon from "./component/AddCoupan";
 import ListCoupan from "./component/ListCoupan";
 import PriceTracker from "./component/PriceTracker";
-import { db_listOfCoupons } from "../../db/database";
 import { useLocation, useHistory } from "react-router-dom";
 
-const Dashboard = (props) => {
-	const [currentItem, setCurrentItem] = useState(2);
+import { AppContext } from "../../context/AppContext";
 
+const Dashboard = (props) => {
 	const location = useLocation();
 	const history = useHistory();
+	const [currentItem, setCurrentItem] = useState(2);
+	const [formMode, setFormMode] = useState(1);
+	var date = new Date();
 
-	useEffect(() => {
-		
+	var month = "";
+	var datee = "";
+
+	if (Number(date.getMonth()) < 10) {
+		month = "0" + date.getMonth();
+	} else {
+		month = date.getMonth();
+	}
+
+	if (Number(date.getDate()) < 10) {
+		datee = "0" + date.getDate();
+	} else {
+		datee = date.getDate();
+	}
+
+	let defaultDate = date.getFullYear() + "-" + month + "-" + datee;
+	const [formData, setFormData] = useState({
+		brand: "",
+		coupancode: "",
+		label: "",
+		addedDate: defaultDate,
+		expiryDate: defaultDate,
 	});
 
+	const { coupans, setCoupans } = useContext(AppContext);
+	useEffect(() => {});
+
 	const routesoption = {
-		1: <AddCoupon />,
-		2: <ListCoupan />,
+		1: (
+			<AddCoupon
+				mode={formMode}
+				formData={formData}
+				setFormData={setFormData}
+				defaultDate={defaultDate}
+			/>
+		),
+		2: (
+			<ListCoupan
+				setFormMode={setFormMode}
+				setCurrentItem={setCurrentItem}
+				setFormData={setFormData}
+			/>
+		),
 		3: <PriceTracker />,
 	};
-
-	const listOfCoupons = db_listOfCoupons;
 
 	function currentItemHandler(data, event) {
 		// setCurrentItem();
 		setCurrentItem(data);
-		console.log(data, event);
 	}
 	return (
 		<div className="dashboard">
@@ -53,7 +88,7 @@ const Dashboard = (props) => {
 						<ul className="nav-profile">
 							<li>
 								<MdPersonPin />
-								<span>{location.state.username}</span>
+								<span>{location.state.name}</span>
 							</li>
 							<li
 								onClick={() => {
@@ -75,6 +110,14 @@ const Dashboard = (props) => {
 							className=""
 							onClick={(event) => {
 								currentItemHandler(1, event);
+								setFormMode(1);
+								setFormData({
+									brand: "",
+									coupancode: "",
+									label: "",
+									addedDate: defaultDate,
+									expiryDate: defaultDate,
+								});
 							}}
 						>
 							<MdAdd />

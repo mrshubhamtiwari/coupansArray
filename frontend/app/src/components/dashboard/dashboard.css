@@ -69,8 +69,11 @@ li > span {
 
 .dashboard-content {
 	flex: 4;
+	display: flex;
+	justify-content: center;
 	background-color: whitesmoke;
 	padding: 2em;
+	position: relative;
 }
 
 .logoText-dashboard {
@@ -80,4 +83,12 @@ li > span {
 	margin-top: 10px;
 	width: 110px;
 	height: auto;
+}
+
+.background {
+	width: 50vh;
+}
+
+.list-coupans {
+	position: relative;
 }

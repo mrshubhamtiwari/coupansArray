@@ -3,10 +3,10 @@
 	transition: transform 0.6s;
 }
 .coupan-card:hover {
-	transform: scale(0.9);
+	transform: scale(0.95);
 }
 .coupan-card {
-	margin: 2em;
+	margin: 0.5em;
 	display: block;
 	box-sizing: border-box;
 	box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
@@ -17,14 +17,14 @@
 }
 
 .coupan-image {
-	padding: 1.5em;
+	padding: 1em;
 	flex: 1;
 	display: flex;
-
-	align-items: center;
+	flex-direction: column-reverse;
+	/* position: relative; */
 }
 .coupan-image > img {
-	width: 150px;
+	width: 100px;
 	height: auto;
 }
 .coupan-title {
@@ -62,7 +62,7 @@
 
 @media only screen and (max-width: 768px) {
 	.coupan-card {
-		margin: 2em;
+		margin: 0.5em;
 		display: block;
 		box-sizing: border-box;
 		box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
@@ -75,6 +75,7 @@
 	}
 
 	.coupan-image {
+		position: relative;
 		padding: 1.5em;
 		flex: 1;
 		display: flex;
@@ -118,4 +119,26 @@
 	.coupan-label > span {
 		display: none;
 	}
+}
+
+.coupan-footers {
+	/* padding: 0em 1.5em; */
+}
+.coupan-footers > .actionButtons {
+	display: flex;
+	justify-content: center;
+}
+
+.coupan-footers > .actionButtons > button {
+	border: 1px solid white;
+	padding: 0.4em;
+	background-color: #1e1e1e;
+	color: white;
+	transition: transform 0.5s;
+}
+
+.coupan-footers > .actionButtons > button:hover {
+	cursor: pointer;
+	transform: scale(1.1);
+	background-color: #e43e3f;
 }

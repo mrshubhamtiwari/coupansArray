@@ -8,6 +8,8 @@ import {
 	ExpireOn,
 } from "../../shared/Icons";
 
+import { MdEdit, MdDelete, MdHideSource, MdVisibility } from "react-icons/md";
+
 import vcode from "../../images/icons/voucher.png";
 import "./card.css";
 function Card({
@@ -19,11 +21,37 @@ function Card({
 	function copycodeHandler(event) {
 		navigator.clipboard.writeText(event.target.innerText);
 	}
+
 	return (
 		<div className="coupan-card">
 			<div className="coupan-header">
 				<div className="coupan-image">
-					<img src={coupan.image} alt={coupan.label} />
+					<div className="coupan-footers">
+						<div className="actionButtons">
+							<button onClick={editCardHandler}>
+								<MdEdit />
+							</button>
+							<button onClick={deleteCardHandler}>
+								<MdDelete />
+							</button>
+							<button onClick={changeStatusHandler}>
+								{coupan.status.toLowerCase() === "active" ? (
+									<MdHideSource />
+								) : (
+									<MdVisibility />
+								)}
+							</button>
+						</div>
+					</div>
+
+					<img
+						src={
+							"https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www." +
+							coupan.brand +
+							".com&size=50"
+						}
+						alt={coupan.label}
+					/>
 				</div>
 				<div className="coupan-title">
 					<span className="coupan-label">
@@ -31,10 +59,10 @@ function Card({
 						{coupan.label}
 					</span>
 					<div>
-						{coupan.status === "Active" ? (
+						{coupan.status.toLowerCase() === "active" ? (
 							<button className="btn">
 								<StatusActive /> &nbsp;
-								{coupan.status}
+								{coupan.status.charAt(0).toUpperCase() + coupan.status.slice(1)}
 							</button>
 						) : (
 							<button className="btn">
@@ -55,7 +83,9 @@ function Card({
 							&nbsp;
 							<span
 								className={
-									coupan.status === "Active" ? "" : "coupon-code-value"
+									coupan.status.toLowerCase() === "active"
+										? ""
+										: "coupon-code-value"
 								}
 								onClick={copycodeHandler}
 							>
@@ -87,15 +117,6 @@ function Card({
 							</li>
 						</ul>
 					</div>
-				</div>
-			</div>
-			<div className="coupan-footers">
-				<div className="actionButtons">
-					<button onClick={() => editCardHandler(coupan.id)}>Edit</button>
-					<button onClick={() => deleteCardHandler(coupan.id)}>Delete</button>
-					<button onClick={() => changeStatusHandler(coupan.id)}>
-						Mark as inactive
-					</button>
 				</div>
 			</div>
 		</div>

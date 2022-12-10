@@ -1,42 +1,68 @@
 import React, { useEffect, useState } from "react";
-import { useHistory, Link } from "react-router-dom";
-
-import { db_users } from "../../db/database";
+import { useHistory } from "react-router-dom";
 import InputElements from "../form/InputElement";
 import Notify from "../notification/Notify";
 import "./login.css";
+
+import { LoginContext } from "../../context/LoginContext";
+
 function Login(props) {
 	const history = useHistory();
 	const [authStatus, setAuthStatus] = useState({
 		message: "",
 		status: "",
 	});
+	const [users, listofusers] = useState([]);
+	useEffect(() => {
+		console.log("Sign-In component In");
+	}, []);
 
 	const [formData, setformData] = useState({ username: "", password: "" });
 	const inputHandler = (event) => {
 		setformData({ ...formData, [event.target.name]: event.target.value });
 	};
-	const submitHandler = () => {
-		const fetchUser = db_users.filter((user) => {
-			return user.name === formData.username && user.pwd === formData.password;
-		});
 
-		if (fetchUser.length > 0) {
-			setAuthStatus({
-				message: "success",
-				status: "success",
+	const submitHandler = () => {
+		fetch("http://localhost:5000/users/log", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(formData),
+		})
+			.then((data) => {
+				return data.json();
+			})
+			.then((jsondata) => {
+				console.log(jsondata);
+				if (jsondata.length > 0) {
+					setAuthStatus({
+						message: "success",
+						status: "success",
+					});
+					history.push({
+						pathname: "/dashboard",
+						state: jsondata[0],
+					});
+				} else {
+					setAuthStatus({
+						message: "Invalid Credentails, try again!",
+						status: "failure",
+					});
+
+					setTimeout(() => {
+						setAuthStatus({
+							message: "",
+							status: "",
+						});
+					}, 1000);
+				}
+			})
+			.catch((err) => {
+				console.log(err);
 			});
-			history.push({
-				pathname: "/dashboard",
-				state: formData,
-			});
-		} else {
-			setAuthStatus({
-				message: "Invalid Credentails, try again!",
-				status: "failure",
-			});
-		}
 	};
+
 	return (
 		<div className="login-container">
 			<Notify
@@ -69,9 +95,13 @@ function Login(props) {
 				onChange={inputHandler}
 				value={formData.password}
 			/>
-
-			<InputElements type="Submit" value={"Login"} onClick={submitHandler} />
-
+			<InputElements
+				label=""
+				type="Submit"
+				value={"Login"}
+				onClick={submitHandler}
+				onChange={submitHandler}
+			/>
 			<div className="links" onClick={props.setRegister}>
 				<span>Register</span>
 			</div>

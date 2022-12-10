@@ -5,12 +5,12 @@
 	margin: 0.5em 0;
 	width: 100%;
 }
-.input-group:nth-last-child(2) input {
+.input-group:nth-last-child(2) input[type="submit"] {
 	color: white;
 	background-color: rgb(211, 53, 53);
 }
 
-.input-group:nth-last-child(2) input:hover {
+.input-group:nth-last-child(2) input[type="submit"]:hover {
 	color: white;
 	background-color: rgba(199, 51, 51, 0.819);
 }

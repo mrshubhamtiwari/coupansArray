@@ -47,7 +47,7 @@ export const db_listOfCoupons = [
 	},
 ];
 
-export const db_users = [
+export var db_users = [
 	{
 		id: 1,
 		name: "Shubham",

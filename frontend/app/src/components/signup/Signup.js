@@ -7,6 +7,7 @@ import Notify from "../notification/Notify";
 import "./signup.css";
 function Signup(props) {
 	const history = useHistory();
+
 	const [authStatus, setAuthStatus] = useState({
 		message: "",
 		status: "",
@@ -17,6 +18,7 @@ function Signup(props) {
 		pwd: "",
 		cpwd: "",
 	});
+
 	const inputHandler = (event) => {
 		setformData({ ...formData, [event.target.name]: event.target.value });
 	};
@@ -24,7 +26,7 @@ function Signup(props) {
 		const fetchUser = db_users.filter((user) => {
 			return user.name === formData.name;
 		});
-		console.log(fetchUser);
+
 		if (fetchUser.length > 0) {
 			setAuthStatus({
 				message: "User already exist",
@@ -33,16 +35,43 @@ function Signup(props) {
 			return;
 		}
 
-		if (formData.pwd === formData.cpwd && formData.pwd != "") {
+		if (formData.pwd === formData.cpwd && formData.pwd !== "") {
+			fetch("http://localhost:5000/users", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					id: Math.random(),
+					name: formData.name,
+					pwd: formData.pwd,
+				}),
+			})
+				.then((data) => {
+					return data.json();
+				})
+				.then((jsondata) => {
+					console.log(jsondata);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+
 			setAuthStatus({
 				message: "User Account Created!",
 				status: "success",
 			});
 		} else {
 			setAuthStatus({
-				message: "Invalid Entry or Password Does not match",
+				message: "password does not match !",
 				status: "failure",
 			});
+			setTimeout(() => {
+				setAuthStatus({
+					message: "",
+					status: "",
+				});
+			}, 1000);
 		}
 		setformData({ name: "", pwd: "", cpwd: "" });
 	};
@@ -88,7 +117,13 @@ function Signup(props) {
 				onChange={inputHandler}
 				value={formData.cpwd}
 			/>
-			<InputElements type="Submit" value={"Register"} onClick={submitHandler} />
+			<InputElements
+				label=""
+				type="Submit"
+				value={"Register"}
+				onClick={submitHandler}
+				onChange={submitHandler}
+			/>
 
 			<div className="links" onClick={props.setLogin}>
 				<span>Sign-in</span>

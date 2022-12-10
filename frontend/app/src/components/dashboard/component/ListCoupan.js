@@ -1,14 +1,84 @@
-import React from "react";
-import { db_listOfCoupons } from "../../../db/database";
+import React, { useContext, useEffect, useState } from "react";
 import Card from "../../card/Card";
+import { AppContext } from "../../../context/AppContext";
+import { useLocation } from "react-router-dom";
 
-export default function ListCoupan() {
-	const dbCoupons = db_listOfCoupons;
+export default function ListCoupan({
+	setCurrentItem,
+	setFormData,
+	setFormMode,
+}) {
+	const [coupans, setCoupans] = useState([]);
+
+	const location = useLocation();
+	useEffect(() => {
+		console.log(location);
+		fetch("http://localhost:5000/coupons/user/" + location.state.id, {
+			headers: {
+				"Content-Type": "application/json",
+			},
+		})
+			.then((response) => response.json())
+			.then((jsondata) => {
+				setCoupans(jsondata);
+			})
+			.catch();
+	}, []);
+
+	function deleteCardHandler(id) {
+		fetch(
+			"http://localhost:5000/coupon?id=" + id + "&userid=" + location.state.id,
+			{
+				method: "DELETE",
+			}
+		)
+			.then((response) => response.json())
+			.then((jsondata) => setCoupans(jsondata))
+			.catch((err) => console.log(err));
+	}
+
+	function editCardHandler(id) {
+		fetch("http://localhost:5000/coupon/" + id, { method: "GET" })
+			.then((response) => response.json())
+			.then((jsondata) => {
+				console.log(jsondata[0]);
+				setFormData(jsondata[0]);
+				setCurrentItem(1);
+				setFormMode(2);
+			})
+			.catch((err) => console.log(err));
+	}
+
+	function changeStatusHandler(coupon) {
+		fetch("http://localhost:5000/coupon/status/" + coupon.id, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ userid: location.state.id }),
+		})
+			.then((response) => response.json())
+			.then((jsondata) => setCoupans(jsondata))
+			.catch((err) => console.log(err));
+	}
+
 	return (
-		<div>
-			{dbCoupons.map((coupan) => (
-				
-				<Card coupan={coupan} key={coupan.id} />
+		<div className="list-coupans">
+			{coupans.map((coupan) => (
+				<div key={coupan.id}>
+					<Card
+						coupan={coupan}
+						deleteCardHandler={() => {
+							deleteCardHandler(coupan.id);
+						}}
+						changeStatusHandler={() => {
+							changeStatusHandler(coupan);
+						}}
+						editCardHandler={() => {
+							editCardHandler(coupan.id);
+						}}
+					/>
+				</div>
 			))}
 		</div>
 	);
