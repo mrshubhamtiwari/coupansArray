@@ -42,6 +42,7 @@ function App() {
 	const [login, setLogin] = useState(false);
 	const [register, setRegister] = useState(false);
 	var [coupans, setCoupans] = useState([]);
+
 	useEffect(() => {
 		console.log("App.js");
 		fetchCoupon();
@@ -86,6 +87,9 @@ function App() {
 									setRegister={() => {
 										if (!register) setRegister(!register);
 										else setLogin(false);
+									}}
+									setLogin={(status) => {
+										setLogin(status);
 									}}
 								/>
 							</Backdrop>
@@ -153,7 +157,12 @@ function App() {
 							</div>
 							<div className="content">
 								{coupans.map((coupan) => (
-									<Card coupan={coupan} key={coupan.id} id={coupan.id} />
+									<Card
+										coupan={coupan}
+										key={coupan.id}
+										id={coupan.id}
+										loginstatus={false}
+									/>
 								))}
 							</div>
 							<div></div>

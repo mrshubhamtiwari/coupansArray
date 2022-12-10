@@ -17,33 +17,34 @@ function Card({
 	deleteCardHandler,
 	editCardHandler,
 	changeStatusHandler,
+	loginstatus,
 }) {
 	function copycodeHandler(event) {
 		navigator.clipboard.writeText(event.target.innerText);
 	}
-
 	return (
 		<div className="coupan-card">
 			<div className="coupan-header">
 				<div className="coupan-image">
-					<div className="coupan-footers">
-						<div className="actionButtons">
-							<button onClick={editCardHandler}>
-								<MdEdit />
-							</button>
-							<button onClick={deleteCardHandler}>
-								<MdDelete />
-							</button>
-							<button onClick={changeStatusHandler}>
-								{coupan.status.toLowerCase() === "active" ? (
-									<MdHideSource />
-								) : (
-									<MdVisibility />
-								)}
-							</button>
+					{loginstatus && (
+						<div className="coupan-footers ">
+							<div className="actionButtons">
+								<button onClick={editCardHandler}>
+									<MdEdit />
+								</button>
+								<button onClick={deleteCardHandler}>
+									<MdDelete />
+								</button>
+								<button onClick={changeStatusHandler}>
+									{coupan.status.toLowerCase() === "active" ? (
+										<MdHideSource />
+									) : (
+										<MdVisibility />
+									)}
+								</button>
+							</div>
 						</div>
-					</div>
-
+					)}
 					<img
 						src={
 							"https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www." +

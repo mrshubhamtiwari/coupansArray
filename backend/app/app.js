@@ -101,8 +101,6 @@ app.post("/coupon/status/:id", async (req, res) => {
 		return coupon != null;
 	});
 
-	coupons = result;
-
 	if (result) {
 		return res.json(result).status(200);
 	}
@@ -110,22 +108,24 @@ app.post("/coupon/status/:id", async (req, res) => {
 });
 
 app.delete("/coupon", async (req, res) => {
-	let _res = coupons.map((coupon) => {
+	let result1 = coupons.filter((coupon) => {
+		return coupon.id != req.query.id;
+	});
+
+	let _res = result1.map((coupon) => {
 		if (coupon.addedById == req.query.userid) {
 			return coupon;
 		}
 	});
+
 	let result = _res.filter((coupon) => {
 		return coupon != null;
-	});
-	let result1 = _res.filter((coupon) => {
-		return coupon.id != req.query.id;
 	});
 
 	coupons = result1;
 	console.log(coupons);
 	if (result) {
-		return res.json(coupons).status(200);
+		return res.json(result).status(200);
 	}
 	res.json({ message: "not found" }).status(201);
 });

@@ -104,11 +104,6 @@ export default function AddCoupan({
 		)
 			.then((response) => response.json())
 			.then((jsondata) => {
-				setCoupans(jsondata);
-				setAddCouponStatus({
-					message: "Added to database",
-					status: "success",
-				});
 				setTimeout(() => {
 					setAddCouponStatus({
 						message: "",
@@ -122,6 +117,11 @@ export default function AddCoupan({
 						expiryDate: defaultDate,
 					});
 				}, 2000);
+				setCoupans(jsondata);
+				setAddCouponStatus({
+					message: "Added to database",
+					status: "success",
+				});
 			})
 			.catch((err) => console.log(err));
 	}
@@ -154,11 +154,6 @@ export default function AddCoupan({
 		})
 			.then((response) => response.json())
 			.then((jsondata) => {
-				setCoupans(jsondata);
-				setAddCouponStatus({
-					message: "Record Updated",
-					status: "success",
-				});
 				setTimeout(() => {
 					setAddCouponStatus({
 						message: "",
@@ -172,6 +167,11 @@ export default function AddCoupan({
 						expiryDate: defaultDate,
 					});
 				}, 2000);
+				setCoupans(jsondata);
+				setAddCouponStatus({
+					message: "Record Updated",
+					status: "success",
+				});
 			})
 			.catch((err) => console.log(err));
 	}

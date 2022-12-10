@@ -77,6 +77,7 @@ export default function ListCoupan({
 						editCardHandler={() => {
 							editCardHandler(coupan.id);
 						}}
+						loginstatus={true}
 					/>
 				</div>
 			))}

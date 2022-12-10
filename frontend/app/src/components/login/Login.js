@@ -40,6 +40,7 @@ function Login(props) {
 						message: "success",
 						status: "success",
 					});
+					props.setLogin(false);
 					history.push({
 						pathname: "/dashboard",
 						state: jsondata[0],
