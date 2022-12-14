@@ -130,6 +130,26 @@ app.delete("/coupon", async (req, res) => {
 	res.json({ message: "not found" }).status(201);
 });
 
+app.get("/coupon/find/:searchText", async (req, res) => {
+	if (req.params.searchText.toLowerCase() == "empty") {
+		return res.json(coupons).status(200);
+	}
+	const _res = coupons.filter((coupan) => {
+		const temp = coupan.label.toLowerCase() + " " + coupan.brand.toLowerCase();
+		const res1 = temp.search(req.params.searchText.toLowerCase());
+		if (res1 > 0) {
+			return coupan;
+		}
+	});
+
+	console.log(_res);
+	if (_res.length > 0) {
+		return res.json(_res).status(200);
+	} else {
+		return res.json([]).status(200);
+	}
+});
+
 app.get("/coupon/:id", async (req, res) => {
 	console.log(req.params.id);
 	const result = coupons.filter((coupon) => {

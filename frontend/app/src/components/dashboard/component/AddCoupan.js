@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import InputElements from "../../form/InputElement";
 import { AppContext } from "../../../context/AppContext";
 import Notify from "../../notification/Notify";
+import { PORT } from "../../../context/Server";
 
 export default function AddCoupan({
 	mode,
@@ -90,7 +91,9 @@ export default function AddCoupan({
 			return false;
 		}
 		fetch(
-			"http://localhost:5000/coupon/add?id=" +
+			"http://localhost:" +
+				PORT +
+				"/coupon/add?id=" +
 				location.state.id +
 				"&username=" +
 				location.state.name,
@@ -145,7 +148,7 @@ export default function AddCoupan({
 			return false;
 		}
 
-		fetch("http://localhost:5000/coupon/" + formData.id, {
+		fetch("http://localhost:" + PORT + "/coupon/" + formData.id, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",

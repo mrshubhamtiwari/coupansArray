@@ -132,7 +132,7 @@ const Dashboard = (props) => {
 							<MdList />
 							<span>List Coupans</span>
 						</li>
-						<li
+						{/* <li
 							className=""
 							onClick={() => {
 								currentItemHandler(3);
@@ -140,7 +140,7 @@ const Dashboard = (props) => {
 						>
 							<MdTrackChanges />
 							<span>Price Tracker</span>
-						</li>
+						</li> */}
 					</ul>
 				</div>
 				<div className="dashboard-content">{routesoption[currentItem]}</div>

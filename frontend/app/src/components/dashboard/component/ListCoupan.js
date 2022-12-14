@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Card from "../../card/Card";
 import { AppContext } from "../../../context/AppContext";
 import { useLocation } from "react-router-dom";
+import { PORT } from "../../../context/Server";
 
 export default function ListCoupan({
 	setCurrentItem,
@@ -27,7 +28,12 @@ export default function ListCoupan({
 
 	function deleteCardHandler(id) {
 		fetch(
-			"http://localhost:5000/coupon?id=" + id + "&userid=" + location.state.id,
+			"http://localhost:" +
+				PORT +
+				"/coupon?id=" +
+				id +
+				"&userid=" +
+				location.state.id,
 			{
 				method: "DELETE",
 			}
@@ -38,7 +44,7 @@ export default function ListCoupan({
 	}
 
 	function editCardHandler(id) {
-		fetch("http://localhost:5000/coupon/" + id, { method: "GET" })
+		fetch("http://localhost:" + PORT + "/coupon/" + id, { method: "GET" })
 			.then((response) => response.json())
 			.then((jsondata) => {
 				console.log(jsondata[0]);
@@ -50,7 +56,7 @@ export default function ListCoupan({
 	}
 
 	function changeStatusHandler(coupon) {
-		fetch("http://localhost:5000/coupon/status/" + coupon.id, {
+		fetch("http://localhost:" + PORT + "/coupon/status/" + coupon.id, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

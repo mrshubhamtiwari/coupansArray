@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
+import { PORT } from "./context/Server";
 
 import { AppContext } from "./context/AppContext";
 import {
@@ -44,11 +45,11 @@ function App() {
 	var [coupans, setCoupans] = useState([]);
 
 	useEffect(() => {
-		console.log("App.js");
+		console.log("App.js " + PORT);
 		fetchCoupon();
 	}, []);
 	function fetchCoupon() {
-		fetch("http://localhost:5000/coupons", {
+		fetch("http://localhost:" + PORT + "/coupons", {
 			headers: {
 				"Content-Type": "application/json",
 			},
@@ -59,9 +60,11 @@ function App() {
 			})
 			.catch();
 	}
-
+	const filterHandler = (data) => {
+		console.log(data);
+	};
 	function fetchCoupon() {
-		fetch("http://localhost:5000/coupons", {
+		fetch("http://localhost:" + PORT + "/coupons", {
 			headers: {
 				"Content-Type": "application/json",
 			},
@@ -145,7 +148,8 @@ function App() {
 						</header>
 						<section className="content-body">
 							<div className="search-body">
-								<Search />
+								<Search setCoupans={setCoupans} coupans={coupans} />
+
 								{/* <div className="filters">
 										<div>
 											<Category />
@@ -156,6 +160,7 @@ function App() {
 									</div> */}
 							</div>
 							<div className="content">
+								{coupans.length === 0 ? "No Coupon found" : ""}
 								{coupans.map((coupan) => (
 									<Card
 										coupan={coupan}
@@ -167,7 +172,12 @@ function App() {
 							</div>
 							<div></div>
 							<div className="sidebar p-4">
-								<Sidebar brands={brands} category={category} />
+								<Sidebar
+									brands={brands}
+									category={category}
+									setCoupans={setCoupans}
+									coupans={coupans}
+								/>
 							</div>
 						</section>
 					</Route>

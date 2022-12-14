@@ -5,6 +5,7 @@ import Notify from "../notification/Notify";
 import "./login.css";
 
 import { LoginContext } from "../../context/LoginContext";
+import { PORT } from "../../context/Server";
 
 function Login(props) {
 	const history = useHistory();
@@ -23,7 +24,7 @@ function Login(props) {
 	};
 
 	const submitHandler = () => {
-		fetch("http://localhost:5000/users/log", {
+		fetch("http://localhost:" + PORT + "/users/log", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
